@@ -135,7 +135,32 @@ if configuration.get('scheduler.enabled'):
 # -------------------------------------------------------------------------
 # Define your tables below (or better in another model file) for example
 #
-# >>> db.define_table('mytable', Field('myfield', 'string'))
+
+db.define_table('user_location',
+                Field('user_loc_id', type='integer', unique=True),
+                Field('user_address', type='string'),
+                Field('latitude', type='integer'),
+                Field('longitude', type='integer'))
+
+db.define_table('usertable',
+                Field('user_id', type='integer', unique=True),
+                Field('username', type='string'),
+                Field('email', type='string'),
+                Field('password', type='password'),
+                Field('user_dob', type='date'),
+                Field('user_loc_id', type='reference user_location'))
+
+db.define_table('resources',
+                Field('resources_id', type='integer', unique=True),
+                Field('resources_type', type='string'),
+                Field('resources_qty', type='integer'),
+                Field('resources_location', type='reference user_location'))
+
+db.define_table('pooltable',
+                Field('pooltable_id', type='integer', unique=True),
+                Field('user_id', type='reference usertable'),
+                Field('resources_id', type='reference resources'))
+
 #
 # Fields can be 'string','text','password','integer','double','boolean'
 #       'date','time','datetime','blob','upload', 'reference TABLENAME'
@@ -152,4 +177,4 @@ if configuration.get('scheduler.enabled'):
 # -------------------------------------------------------------------------
 # after defining tables, uncomment below to enable auditing
 # -------------------------------------------------------------------------
-# auth.enable_record_versioning(db)
+auth.enable_record_versioning(db)
