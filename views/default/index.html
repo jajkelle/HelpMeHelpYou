@@ -1,51 +1,193 @@
-{{extend 'layout.html'}}
+<!DOCTYPE HTML>
+<!--
+	Hielo by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Hielo by TEMPLATED</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../static/template-helio/assets/css/main.css" />
+	</head>
+	<body>
 
-{{block header}}
-<div class="jumbotron jumbotron-fluid" style="background-color: #333; color:white; padding:30px;word-wrap:break-word;">
-  <div class="container center">
-    <h1 class="display-5">/{{=request.application}}/{{=request.controller}}/{{=request.function}}</h1>
-  </div>
-</div>
-{{end}}
+		<!-- Header -->
+			<header id="header" class="alt">
+				<div class="logo"><a href="index.html">HelpMeHelpYou </a></div>
+				
+				<a href="#menu">Menu</a>
+			</header>
 
-<div class="row">
-  <div class="col-md-12">
-    {{if 'message' in globals():}}
-    <h2>{{=message}}</h2>
-    <p class="lead">{{=T('How did you get here?')}}</p>
-    <ol style="word-wrap:break-word;">
-      <li>{{=T('You are successfully running web2py')}}</li>
-      <li>{{=XML(T('You visited the url %s', A(request.env.path_info,_href=request.env.path_info)))}}</li>
-      <li>{{=XML(T('Which called the function %s located in the file %s',
-        (A(request.function+'()',_href='#'),
-        A('web2py/applications/%(application)s/controllers/%(controller)s.py' % request,
-        _href=URL('admin','default','peek', args=(request.application,'controllers',request.controller+'.py'))))))}}</li>
-      <li>{{=XML(T('The output of the file is a dictionary that was rendered by the view %s',
-        A('web2py/applications/%(application)s/views/%(controller)s/index.html' % request,
-        _href=URL('admin','default','peek',args=(request.application,'views',request.controller,'index.html')))))}}</li>
-      <li>{{=T('You can modify this application and adapt it to your needs')}}</li>
-    </ol>
-    <div class="jumbotron jumbotron-fluid" style="padding:30px;word-wrap:break-word;">
-      <div class="container center">
-        <a class="btn btn-primary" href="{{=URL('admin','default','index')}}">
-          <i class="fa fa-cog"></i>
-          {{=T("admin")}}
-        </a>
-        <a class="btn btn-secondary" href="{{=URL('examples','default','index')}}">{{=T("Online examples")}}</a>
-        <a class="btn btn-secondary" href="http://web2py.com">web2py.com</a>
-        <a class="btn btn-secondary" href="http://web2py.com/book">{{=T('Documentation')}}</a>
-        <a class="btn btn-secondary" href="{{=URL('default','api_get_user_email')}}">{{=T('API Example')}}</a>
-        <a class="btn btn-secondary" href="{{=URL('default','grid/auth_user')}}">{{=T('Grid Example')}}</a>
-        <a class="btn btn-secondary" href="{{=URL('default','wiki')}}">{{=T('Wiki Example')}}</a>
-      </div>
-    </div>
-    {{elif 'content' in globals():}}
-    {{=content}}
-    {{else:}}
-    {{=BEAUTIFY(response._vars)}}
-    {{pass}}
-  </div>
-</div>
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="generic.html">Generic</a></li>
+					<li><a href="elements.html">Elements</a></li>
+				</ul>
+			</nav>
+
+		<!-- Banner -->
+			<section class="banner full">
+				<article>
+					<img src="../static/template-helio/assets/images/slide01.jpg" alt="" />
+					<div class="inner">
+						<header>
+							<p>A free responsive web site template by <a href="https://templated.co">TEMPLATED</a></p>
+							<h2>Hielo</h2>
+                                                        <img src="../static/images/Logo.png"  alt="" />
+						</header>
+					</div>
+				</article>
+				<article>
+					<img src="images/slide02.jpg" alt="" />
+					<div class="inner">
+						<header>
+							<p>Lorem ipsum dolor sit amet nullam feugiat</p>
+							<h2>Magna etiam</h2>
+						</header>
+					</div>
+				</article>
+				<article>
+					<img src="images/slide03.jpg"  alt="" />
+					<div class="inner">
+						<header>
+							<p>Sed cursus aliuam veroeros lorem ipsum nullam</p>
+							<h2>Tempus dolor</h2>
+						</header>
+					</div>
+				</article>
+				<article>
+					<img src="images/slide04.jpg"  alt="" />
+					<div class="inner">
+						<header>
+							<p>Adipiscing lorem ipsum feugiat sed phasellus consequat</p>
+							<h2>Etiam feugiat</h2>
+						</header>
+					</div>
+				</article>
+				<article>
+					<img src="images/slide05.jpg"  alt="" />
+					<div class="inner">
+						<header>
+							<p>Ipsum dolor sed magna veroeros lorem ipsum</p>
+							<h2>Lorem adipiscing</h2>
+						</header>
+					</div>
+				</article>
+			</section>
+
+		<!-- One -->
+			<section id="one" class="wrapper style2">
+				<div class="inner">
+					<div class="grid-style">
+
+						<div>
+							<div class="box">
+								<div class="image fit">
+									<img src="images/pic02.jpg" alt="" />
+								</div>
+								<div class="content">
+									<header class="align-center">
+										<p>maecenas sapien feugiat ex purus</p>
+										<h2>Lorem ipsum dolor</h2>
+									</header>
+									<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada.</p>
+									<footer class="align-center">
+										<a href="#" class="button alt">Learn More</a>
+									</footer>
+								</div>
+							</div>
+						</div>
+
+						<div>
+							<div class="box">
+								<div class="image fit">
+									<img src="images/pic03.jpg" alt="" />
+								</div>
+								<div class="content">
+									<header class="align-center">
+										<p>mattis elementum sapien pretium tellus</p>
+										<h2>Vestibulum sit amet</h2>
+									</header>
+									<p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada.</p>
+									<footer class="align-center">
+										<a href="#" class="button alt">Learn More</a>
+									</footer>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style3">
+				<div class="inner">
+					<header class="align-center">
+						<p>Nam vel ante sit amet libero scelerisque facilisis eleifend vitae urna</p>
+						<h2>Morbi maximus justo</h2>
+					</header>
+				</div>
+			</section>
+
+		<!-- Three -->
+			<section id="three" class="wrapper style2">
+				<div class="inner">
+					<header class="align-center">
+						<p class="special">Nam vel ante sit amet libero scelerisque facilisis eleifend vitae urna</p>
+						<h2>Morbi maximus justo</h2>
+					</header>
+					<div class="gallery">
+						<div>
+							<div class="image fit">
+								<a href="#"><img src="images/pic01.jpg" alt="" /></a>
+							</div>
+						</div>
+						<div>
+							<div class="image fit">
+								<a href="#"><img src="images/pic02.jpg" alt="" /></a>
+							</div>
+						</div>
+						<div>
+							<div class="image fit">
+								<a href="#"><img src="images/pic03.jpg" alt="" /></a>
+							</div>
+						</div>
+						<div>
+							<div class="image fit">
+								<a href="#"><img src="images/pic04.jpg" alt="" /></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 
 
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="container">
+					<ul class="icons">
+						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+					</ul>
+				</div>
+				<div class="copyright">
+					&copy; Untitled. All rights reserved.
+				</div>
+			</footer>
 
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
