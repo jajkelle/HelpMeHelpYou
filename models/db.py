@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # -------------------------------------------------------------------------
 # AppConfig configuration made easy. Look inside private/appconfig.ini
 # Auth is for authenticaiton and access control
@@ -91,8 +89,13 @@ auth = Auth(db, host_names=configuration.get('host.names'))
 # -------------------------------------------------------------------------
 # create all tables needed by auth, maybe add a list of extra fields
 # -------------------------------------------------------------------------
-auth.settings.extra_fields['auth_user'] = []
-auth.define_tables(username=False, signature=False)
+
+auth.settings.extra_fields['auth_user']= [
+                Field('user_address', type='string'),
+                Field('latitude', type='integer'),
+                Field('longitude', type='integer')]
+
+auth.define_tables(username=True, signature=False)
 
 # -------------------------------------------------------------------------
 # configure email
@@ -136,29 +139,16 @@ if configuration.get('scheduler.enabled'):
 # Define your tables below (or better in another model file) for example
 #
 
-db.define_table('user_location',
-                Field('user_loc_id', type='integer', unique=True),
-                Field('user_address', type='string'),
-                Field('latitude', type='integer'),
-                Field('longitude', type='integer'))
-
-db.define_table('usertable',
-                Field('user_id', type='integer', unique=True),
-                Field('username', type='string'),
-                Field('email', type='string'),
-                Field('password', type='password'),
-                Field('user_dob', type='date'),
-                Field('user_loc_id', type='reference user_location'))
 
 db.define_table('resources',
                 Field('resources_id', type='integer', unique=True),
                 Field('resources_type', type='string'),
                 Field('resources_qty', type='integer'),
-                Field('resources_location', type='reference user_location'))
+                Field('resource_owner', type='reference auth_user'))
 
 db.define_table('pooltable',
                 Field('pooltable_id', type='integer', unique=True),
-                Field('user_id', type='reference usertable'),
+                Field('user_id', type='reference auth_user'),
                 Field('resources_id', type='reference resources'))
 
 #
