@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # -------------------------------------------------------------------------
 # AppConfig configuration made easy. Look inside private/appconfig.ini
 # Auth is for authenticaiton and access control
@@ -91,8 +89,13 @@ auth = Auth(db, host_names=configuration.get('host.names'))
 # -------------------------------------------------------------------------
 # create all tables needed by auth, maybe add a list of extra fields
 # -------------------------------------------------------------------------
-auth.settings.extra_fields['auth_user'] = []
-auth.define_tables(username=False, signature=False)
+
+auth.settings.extra_fields['auth_user']= [
+                Field('user_address', type='string'),
+                Field('latitude', type='integer'),
+                Field('longitude', type='integer')]
+
+auth.define_tables(username=True, signature=False)
 
 # -------------------------------------------------------------------------
 # configure email
@@ -135,7 +138,19 @@ if configuration.get('scheduler.enabled'):
 # -------------------------------------------------------------------------
 # Define your tables below (or better in another model file) for example
 #
-# >>> db.define_table('mytable', Field('myfield', 'string'))
+
+
+db.define_table('resources',
+                Field('resources_id', type='integer', unique=True),
+                Field('resources_type', type='string'),
+                Field('resources_qty', type='integer'),
+                Field('resource_owner', type='reference auth_user'))
+
+db.define_table('pooltable',
+                Field('pooltable_id', type='integer', unique=True),
+                Field('user_id', type='reference auth_user'),
+                Field('resources_id', type='reference resources'))
+
 #
 # Fields can be 'string','text','password','integer','double','boolean'
 #       'date','time','datetime','blob','upload', 'reference TABLENAME'
@@ -152,4 +167,4 @@ if configuration.get('scheduler.enabled'):
 # -------------------------------------------------------------------------
 # after defining tables, uncomment below to enable auditing
 # -------------------------------------------------------------------------
-# auth.enable_record_versioning(db)
+auth.enable_record_versioning(db)
