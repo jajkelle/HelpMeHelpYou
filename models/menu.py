@@ -5,7 +5,7 @@
 # this is the main application menu add/remove items as required
 # ----------------------------------------------------------------------------------------------------------------------
 
-response.men = [
+response.menu = [
     (T('Home'), False, URL('default', 'index'), [])
 ]
 
