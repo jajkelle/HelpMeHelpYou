@@ -4,10 +4,17 @@
 # this file is released under public domain and you can use without limitations
 # -------------------------------------------------------------------------
 
+#https://helpmehelpyou/deafult/list_user_resources/user_id/page
 # ---- example index page ----
 def index():
     response.flash = T("Hello World")
-    return dict(message=T('Welcome to web2py!'))
+    return dict(message=T('Welcome to HelpYouHelpMe'))
+
+def list_user_resources():
+    user_id = request.args(0,cast=int)
+    page = request.args(1,cast=int,default=0)
+    row=db(db.resources.resource_owner==user_id).select()
+    return locals()
 
 # ---- API (example) -----
 @auth.requires_login()
