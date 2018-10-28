@@ -12,10 +12,12 @@ def index():
 
 def list_user_resources():
     user_id = request.args(0,cast=int)
-    page = request.args(1,cast=int,default=0)
     row=db(db.resources.resource_owner==user_id).select()
     return locals()
 
+def add_resources():
+    form = SQLFORM(db.resources).process(next=URL(index))
+    return locals()
 # ---- API (example) -----
 @auth.requires_login()
 def api_get_user_email():
