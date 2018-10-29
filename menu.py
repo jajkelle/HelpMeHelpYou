@@ -38,7 +38,7 @@ if not configuration.get('app.production'):
                  'HelpMeHelpYou', 'default', 'add_resource')),
             (T('Delete'), False,
              URL(
-                 'HelpMeHelpYou', 'default', 'edit/%s/models/db.py' % _app)),
+                 'HelpMeHelpYou', 'default', 'delete_resource')),
             (T('Edit'), False,
              URL(
                  'HelpMeHelpYou', 'default', 'edit/%s/models/db.py' % _app)),
