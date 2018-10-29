@@ -9,15 +9,20 @@ def index():
     resource = SQLFORM.grid(db.resources,user_signature=False)
     return dict(resource=resource)
 	
-def view_resource(): #working
+def view_resource(): #working but not for individual accounts
     specifications = db(db.resources).select()
     return dict(specifications=specifications)
 
-def add_resource(): #working
+def add_resource(): #working but not for individual accounts
     form = SQLFORM(db.resources)
     if form.validate():
         form.vars.id = db.resources.insert(**dict(form.vars))
     return dict(form=form)
+
+def delete_resource(): #working but not for individual accounts
+    for row in db(db.resources.id>0).select():
+        db(db.resources.resources_id == request.vars.resources_id).delete()
+    return dict()
 	
 # ---- API (example) -----
 @auth.requires_login()
