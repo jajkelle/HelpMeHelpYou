@@ -5,47 +5,20 @@
 # -------------------------------------------------------------------------
 
 # ---- example index page ----
-
-def get_resources():
-    resources_id = request.args(0,cast=int)
-    resources = db.resources(id=resources_id)
-    if not resources:
-        session.flash = 'page not found'
-        redirect(URL('index'))
-    return resources
-
 def index():
-    #rows = db(db.resources.resources_id>0).select()
-    rows = db(db.resources).select()
-    return locals()
+    resource = SQLFORM.grid(db.resources,user_signature=False)
+    return dict(resource=resource)
+	
+def view_resource(): #working
+    specifications = db(db.resources).select()
+    return dict(specifications=specifications)
 
-def submit_resources():
+def add_resource(): #working
     form = SQLFORM(db.resources)
+    if form.validate():
+        form.vars.id = db.resources.insert(**dict(form.vars))
     return dict(form=form)
-
-def view_all_resources():
-    rows = db(db.resources.id>0).select()
-    return dict(rows=rows)
-
-def view_resource():
-    rows = db(db.resources.id>0).select()
-    row = rows[1]
-    return dict(row=row)
-    
-def add_resource():
-    rows = SQLFORM(db.resources)
-    rows.vars.id = db.resources.insert(**dict(rows.vars))
-    return dict(rows=rows)
-
-def remove_resource():
-    n=0
-    rows = db(db.resources.resources_id>0).select()
-    rows[n].delete_record()
-    return local()
-        
-#def update_resource():
-
-    
+	
 # ---- API (example) -----
 @auth.requires_login()
 def api_get_user_email():
