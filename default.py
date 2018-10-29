@@ -9,11 +9,6 @@ def index():
     resource = SQLFORM.grid(db.resources,user_signature=False)
     return dict(resource=resource)
 
-def manage():
-    form = SQLFORM(db.resources)
-    resource = db(db.resources).select()
-    return dict(form=form, resource=resource)
-
 def view_resource(): #working but not for individual accounts
     specifications = db(db.resources).select()
     return dict(specifications=specifications)
