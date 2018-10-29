@@ -32,16 +32,16 @@ if not configuration.get('app.production'):
     _app = request.application
     response.menu += [
         (T('Resources'), False, '#', [
-            (T('View'), False, URL('welcome', 'default', 'view_resource')),
+            (T('View'), False, URL('HelpMeHelpYou', 'default', 'view_resource')),
             (T('Add'), False,
              URL(
-                 'welcome', 'default', 'add_resource')),
+                 'HelpMeHelpYou', 'default', 'add_resource')),
             (T('Delete'), False,
              URL(
-                 'welcome', 'default', 'edit/%s/models/db.py' % _app)),
+                 'HelpMeHelpYou', 'default', 'edit/%s/models/db.py' % _app)),
             (T('Edit'), False,
              URL(
-                 'welcome', 'default', 'edit/%s/models/db.py' % _app)),
+                 'HelpMeHelpYou', 'default', 'edit/%s/models/db.py' % _app)),
         ]),
-        (T('Index'), False, URL('welcome', 'default', 'index')),
+        (T('Index'), False, URL('HelpMeHelpYou', 'default', 'index')),
     ]
