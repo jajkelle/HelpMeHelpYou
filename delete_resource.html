@@ -1,0 +1,37 @@
+{{extend 'layout.html'}}
+<head>
+    <style>
+        table, th, td {
+        border: 1px solid black;
+        }
+    </style>
+</head>
+
+<h2>
+    View Resources
+</h2>
+
+<table style="width:100%">
+    <tr>
+        <strong>
+            <th>Id</th>
+            <th>Type</th>
+            <th>Qty</th>
+            <th>Location</th>
+        </strong>
+    </tr>
+
+        {{for specification in specifications:}}
+    <tr>
+        <td>{{=specification.resources_id}}</td>
+        <td>{{=specification.resources_type}}</td>
+        <td>{{=specification.resources_qty}}</td>
+        <td>{{=specification.resources_location}}</td>
+    </tr>
+        {{pass}}
+</table>
+
+<h2>Delete resource</h2>
+<form enctype="multipart/form-data" action="{{=URL('default', 'delete_resource')}}" method="post">
+    Resource Id: <input name="resources_id" /> <input type="submit" />
+</form>
