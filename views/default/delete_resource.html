@@ -1,0 +1,5 @@
+{{extend 'layout.html'}}
+<h2>Delete resource</h2>
+<form enctype="multipart/form-data" action="{{=URL('default', 'delete_resource')}}" method="post">
+    Resource id: <input name="resources_id" /> <input type="submit" />
+</form>
