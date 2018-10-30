@@ -4,10 +4,29 @@
 # this file is released under public domain and you can use without limitations
 # -------------------------------------------------------------------------
 
+#https://helpmehelpyou/deafult/list_user_resources/user_id/page
 # ---- example index page ----
 def index():
-    response.flash = T("Hello World")
-    return dict(message=T('Welcome to web2py!'))
+    return dict(message=T('Welcome to HelpYouHelpMe'))
+
+def view_resource(): #working but not for individual accounts
+    specifications = db(db.resources).select()
+    return dict(specifications=specifications)
+
+def add_resource(): #working but not for individual accounts
+    form = SQLFORM(db.resources)
+    if form.validate():
+        form.vars.id = db.resources.insert(**dict(form.vars))
+    return dict(form=form)
+
+def delete_resource(): #working but not for individual accounts
+    for row in db(db.resources.id>0).select():
+        db(db.resources.resources_id == request.vars.resources_id).delete()
+    specifications = db(db.resources).select()
+    return dict(specifications=specifications)
+
+def profile():
+    return dict(form=auth.profile())
 
 # ---- API (example) -----
 @auth.requires_login()
@@ -31,6 +50,7 @@ def wiki():
 
 # ---- Action for login/register/etc (required for auth) -----
 def user():
+
     """
     exposes:
     http://..../[app]/default/user/login

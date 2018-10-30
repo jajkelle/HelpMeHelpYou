@@ -91,8 +91,13 @@ auth = Auth(db, host_names=configuration.get('host.names'))
 # -------------------------------------------------------------------------
 # create all tables needed by auth, maybe add a list of extra fields
 # -------------------------------------------------------------------------
-auth.settings.extra_fields['auth_user'] = []
-auth.define_tables(username=False, signature=False)
+auth.settings.extra_fields['resources']= [
+                Field('resource_1', type='string'),
+                Field('resource_2', type='string'),
+                Field('resource_3', type='string'),
+                Field ('resource_4', type='string')]
+
+auth.define_tables(username=True, signature=False)
 
 # -------------------------------------------------------------------------
 # configure email
@@ -148,6 +153,17 @@ if configuration.get('scheduler.enabled'):
 # >>> rows = db(db.mytable.myfield == 'value').select(db.mytable.ALL)
 # >>> for row in rows: print row.id, row.myfield
 # -------------------------------------------------------------------------
+
+db.define_table('resources',
+                Field('resources_id', type='integer', unique=True),
+                Field('resources_type', type='string'),
+                Field('resources_qty', type='integer'),
+                Field('resource_owner', type='reference auth_user'))
+
+db.define_table('pooltable',
+                Field('pooltable_id', type='integer', unique=True),
+                Field('user_id', type='reference auth_user'),
+                Field('resources_id', type='reference resources'))
 
 # -------------------------------------------------------------------------
 # after defining tables, uncomment below to enable auditing
