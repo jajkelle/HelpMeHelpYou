@@ -1,0 +1,25 @@
+{{extend 'layout.html'}}
+<head>
+    <style>
+        table, th, td {
+        border: 1px solid black;
+        }
+    </style>
+</head>
+ <h2>
+    Users
+</h2>
+ <table style="width:30%">
+    <tr>
+        <strong>
+            <th>User Id</th>
+            <th>User Name</th>
+        </strong>
+    </tr>
+         {{for specification in row:}}
+    <tr>
+        <td>{{=A(specification.id,_href=URL('list_resources',args=specification.id))}}</td>
+        <td>{{=specification.username}}</td>
+    </tr>
+        {{pass}}
+</table>
