@@ -23,6 +23,10 @@ def add_resources():
     form = SQLFORM(db.resources).process(next=URL(index))
     return locals()
 
+def edit_resources():
+    user_id = request.args(0,cast=int)
+    form = SQLFORM(db.resources,id).process('list_user_resources/[resource_owner]')
+    return locals()
 
 # ---- Smart Grid (example) -----
 @auth.requires_membership('admin') # can only be accessed by members of admin groupd
