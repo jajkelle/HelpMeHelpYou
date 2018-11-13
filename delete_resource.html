@@ -1,5 +1,13 @@
 {{extend 'layout.html'}}
-{{extend 'layout.html'}}
+
+<h2>Delete resource</h2>
+<form enctype="multipart/form-data" action="{{=URL('welcome', 'default', 'delete_resource', args = user_id)}}" method="post">
+    Resource Id: <input name="resources_id" />
+                 <input type="submit" />
+</form>
+
+<p />
+
 <head>
     <style>
         table, th, td {
@@ -27,8 +35,3 @@
     </tr>
         {{pass}}
 </table>
-
-<h2>Delete resource</h2>
-<form enctype="multipart/form-data" action="{{=URL('default', 'delete_resource')}}" method="post">
-    Resource Id: <input name="resources_id" /> <input type="submit" />
-</form>

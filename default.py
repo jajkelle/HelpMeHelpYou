@@ -1,30 +1,56 @@
 # -*- coding: utf-8 -*-
-# -------------------------------------------------------------------------
-# This is a sample controller
-# this file is released under public domain and you can use without limitations
-# -------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 
 # ---- example index page ----
+@auth.requires_login()
 def index():
-    resource = SQLFORM.grid(db.resources,user_signature=False)
-    return dict(resource=resource)
+    #resource = SQLFORM.grid(db.resources,user_signature=False)
+    return locals()
 
-def view_resource(): #working but not for individual accounts
-    specifications = db(db.resources).select()
-    return dict(specifications=specifications)
+def view_my_resource():
+    user_id = request.args(0,cast=int)
+    specifications = db(db.resources.resource_owner==user_id).select()
+    return locals()
 
-def add_resource(): #working but not for individual accounts
+def view_resource():
+    user_id = request.args(0,cast=int)
+    specifications = db(db.resources.resource_owner!=user_id).select()
+    return locals()
+
+def add_resource():
+    user_id = request.args(0,cast=int)
     form = SQLFORM(db.resources)
     if form.validate():
         form.vars.id = db.resources.insert(**dict(form.vars))
-    return dict(form=form)
+    specifications = db(db.resources.resource_owner==user_id).select()
+    return locals()
 
-def delete_resource(): #working but not for individual accounts
-    for row in db(db.resources.id>0).select():
-        db(db.resources.resources_id == request.vars.resources_id).delete()
-    specifications = db(db.resources).select()
-    return dict(specifications=specifications)
-	
+def delete_resource():
+    user_id = request.args(0,cast=int)
+    db(db.resources.resources_id == request.vars.resources_id).delete()
+    specifications = db(db.resources.resource_owner==user_id).select()
+    return locals()
+
+def edit_resource():
+    user_id = request.args(0,cast=int)
+    edit_id = request.vars.resources_id
+    edit_type = request.vars.resources_type
+    edit_qty = request.vars.resources_qty
+    try:
+        db(db.resources.resources_id == edit_id).update(resources_type = edit_type)
+    except:
+        pass
+    try:
+        db(db.resources.resources_id == edit_id).update(resources_qty = edit_qty)
+    except:
+        pass
+    specifications = db(db.resources.resource_owner==user_id).select()
+    return locals()
+
+def test():
+    form = SQLFORM(db.resources)
+    return locals()
+
 # ---- API (example) -----
 @auth.requires_login()
 def api_get_user_email():
