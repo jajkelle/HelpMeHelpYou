@@ -5,19 +5,53 @@
 # -------------------------------------------------------------------------
 
 #https://helpmehelpyou/deafult/list_user_resources/user_id/page
+#https://helpmehelpyou/deafult/list_user_resources/category/
+
 # ---- example index page ----
 def index():
     response.flash = T("Hello World")
     return dict(message=T('Welcome to HelpYouHelpMe'))
 
-def list_user_resources():
+def list_resources():
     user_id = request.args(0,cast=int)
     row=db(db.resources.resource_owner==user_id).select()
     return locals()
 
-def add_resources():
-    form = SQLFORM(db.resources).process(next=URL(index))
+def delete_resource():
+    user_id = request.args(0,cast=int)
+    for row in db(db.resources.resource_owner==user_id).select():
+        db(db.resources.resources_id == request.vars.resources_id).delete()
+    row = db(db.resources.resource_owner==user_id).select()
     return locals()
+
+def list_id():
+    row = db(db.auth_user).select()
+    return locals()
+
+def list_resource_by_category():
+    category_name = request.args(0)
+    category=db.category(Name=category_name)
+    row = db(db.resources.resources_category==category).select()
+    return locals()
+
+def add_resources():
+    user_id = session.auth.user.id
+    db.resources.resource_owner.default = user_id
+    form = SQLFORM(db.resources).process(next='list_user_resources/[resource_owner]')
+    return locals()
+
+def edit_resources():
+    user_id = request.args(0,cast=int)
+    form = SQLFORM(db.resources,id).process('list_user_resources/[resource_owner]')
+    return locals()
+
+def profile():
+    return dict(form=auth.profile())
+
+def category():
+    row = db(db.category).select()
+    return locals()
+
 # ---- API (example) -----
 @auth.requires_login()
 def api_get_user_email():
