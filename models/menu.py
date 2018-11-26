@@ -15,9 +15,11 @@ else:
 
 response.menu += [
     (T('Resources'), False,'#', [
-      (T('View'), False,URL('list_resources',args = user_id)),
-      (T('Add'), False, URL('add_resources')),
-      (T('Other'), False, URL('list_id'))]
+      (T('My Resource'), False,URL('list_resources',args = user_id) if session.auth else URL('default','index')),
+      ((T('Add Resources'), False, URL('add_resources') if session.auth else URL('default','index'))),
+      (T('List Users'), False, URL('list_id')),
+        (T('Delete Resources'), False, URL('delete_resource',args = user_id) if session.auth else URL('default','index')),
+        (T('Category'),False,URL('category'))]
     )
 ]
 # ----------------------------------------------------------------------------------------------------------------------

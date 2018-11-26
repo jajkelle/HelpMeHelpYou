@@ -59,7 +59,7 @@ if request.is_local and not configuration.get('app.production'):
 # -------------------------------------------------------------------------
 # choose a style for forms
 # -------------------------------------------------------------------------
-response.formstyle = 'bootstrap4_inline'
+response.formstyle = 'table3cols'
 response.form_label_separator = ''
 
 # -------------------------------------------------------------------------
@@ -90,10 +90,11 @@ auth = Auth(db, host_names=configuration.get('host.names'))
 # create all tables needed by auth, maybe add a list of extra fields
 # -------------------------------------------------------------------------
 
-auth.settings.extra_fields['auth_user']= [
-                Field('user_address', type='string'),
-                Field('latitude', type='integer'),
-                Field('longitude', type='integer')]
+auth.settings.extra_fields['resources']= [
+                Field('resource_1', type='string'),
+                Field('resource_2', type='string'),
+                Field('resource_3', type='string'),
+                Field ('resource_4', type='string')]
 
 auth.define_tables(username=True, signature=False)
 
@@ -139,12 +140,16 @@ if configuration.get('scheduler.enabled'):
 # Define your tables below (or better in another model file) for example
 #
 
+db.define_table('category', Field('Name',type='string'),
+               format='%(Name)s')
+
 
 db.define_table('resources',
                 Field('resources_id', type='integer', unique=True),
                 Field('resources_type', type='string'),
                 Field('resources_qty', type='integer'),
-                Field('resource_owner', type='reference auth_user'))
+                Field('resources_category',type = 'reference category'),
+                Field('resource_owner', type='reference auth_user',writable=False))
 
 db.define_table('pooltable',
                 Field('pooltable_id', type='integer', unique=True),
