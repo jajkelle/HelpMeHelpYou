@@ -1,5 +1,4 @@
 {{extend 'layout.html'}}
-{{extend 'layout.html'}}
 <head>
     <style>
         table, th, td {
@@ -7,29 +6,26 @@
         }
     </style>
 </head>
-
-<table style="width:100%">
+ <h2>
+    Resources
+</h2>
+ <table style="width:100%">
     <tr>
         <strong>
             <th>Resource Id</th>
             <th>Resource Type</th>
-            <th>Category</th>
+            <th>Resource Category</th>
             <th>Resource Qty</th>
             <th>Resource Owner</th>
         </strong>
     </tr>
-
-        {{for specification in row:}}
+         {{for specification in row:}}
     <tr>
         <td>{{=specification.resources_id}}</td>
         <td>{{=specification.resources_type}}</td>
+        <td>{{=specification.resources_category.Name}}</td>
         <td>{{=specification.resources_qty}}</td>
         <td>{{=specification.resource_owner.username}}</td>
     </tr>
         {{pass}}
 </table>
-
-<h2>Delete resource</h2>
-<form enctype="multipart/form-data" action="{{=URL('default', 'delete_resource')}}" method="post">
-    Resource Id: <input name="resources_id" /> <input type="submit" />
-</form>
