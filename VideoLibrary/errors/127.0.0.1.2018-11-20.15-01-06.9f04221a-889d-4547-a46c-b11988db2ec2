@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.KeyError'> 'uploaded_video'"
+p3
+sS'layer'
+p4
+S'/home/junhong/web2py/web2py/applications/VideoLibrary/controllers/default.py'
+p5
+sS'code'
+p6
+S'<code object <module> at 0x7fe8e04e2a30, file "/home/junhong/web2py/web2py/applications/VideoLibrary/controllers/default.py", line 1>'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/junhong/web2py/web2py/gluon/restricted.py", line 219, in restricted\n    exec(ccode, environment)\n  File "/home/junhong/web2py/web2py/applications/VideoLibrary/controllers/default.py", line 27, in <module>\n  File "/home/junhong/web2py/web2py/gluon/globals.py", line 421, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/junhong/web2py/web2py/applications/VideoLibrary/controllers/default.py", line 22, in new_video\n    form=SQLFORM(db.videos, fields=[\'title\',\'description\',\'uploaded_video\'])\n  File "/home/junhong/web2py/web2py/gluon/sqlhtml.py", line 1422, in __init__\n    else self.extra_fields[fieldname])\nKeyError: \'uploaded_video\'\n'
+p11
+s.
