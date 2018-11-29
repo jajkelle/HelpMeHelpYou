@@ -15,10 +15,17 @@ else:
 
 response.menu += [
     (T('Resources'), False,'#', [
-      (T('View'), False,URL('list_resources',args = user_id)),
-      (T('Add'), False, URL('add_resources')),
-      (T('Other'), False, URL('list_id'))]
+      (T('My Resource'), False,URL('list_resources',args = user_id) if session.auth else URL('default','index')),
+      (T('List Users'), False, URL('list_id')),
+      ((T('Add Resources'), False, URL('add_resources') if session.auth else URL('default','index'))),
+      (T('Delete Resources'), False, URL('delete_resource',args = user_id) if session.auth else URL('default','index'))
+        ]
     )
+]
+
+response.menu += [
+        ((T('Category'),False, '#', [
+                (T(row.Name), False, URL('list_resource_by_category',args=row.Name), []) for row in db(db.category).select()]))
 ]
 # ----------------------------------------------------------------------------------------------------------------------
 # provide shortcuts for development. you can remove everything below in production
