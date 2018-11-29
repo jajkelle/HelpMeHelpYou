@@ -1,14 +1,20 @@
 {{extend 'layout.html'}}
-<head>
+ <h2>Edit resource</h2>
+<form enctype="multipart/form-data" action="{{=URL('welcome', 'default', 'edit_resource', args = user_id)}}" autocomplete="on" method="post">
+    Resource Id:   <input name="resources_id" /> <p /> <p />
+    Resource Type: <input name="resources_type" /> <p />
+    Resource Qty:  <input name="resources_qty" /> <p />
+     &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;
+                    <input type="submit" value="Edit"/>
+</form>
+ <p/>
+ <head>
     <style>
         table, th, td {
         border: 1px solid black;
         }
     </style>
 </head>
- <h2>
-     Resources
-</h2>
  <table style="width:100%">
     <tr>
         <strong>
@@ -18,11 +24,10 @@
             <th>Resource Owner</th>
         </strong>
     </tr>
-         {{for specification in row:}}
+         {{for specification in specifications:}}
     <tr>
         <td>{{=specification.resources_id}}</td>
         <td>{{=specification.resources_type}}</td>
-        <td>{{=specification.resources_category}}</td>
         <td>{{=specification.resources_qty}}</td>
         <td>{{=specification.resource_owner.username}}</td>
     </tr>

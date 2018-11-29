@@ -1,24 +1,17 @@
 {{extend 'layout.html'}}
-<head>
-    <style>
-        table, th, td {
-        border: 1px solid black;
-        }
-    </style>
-</head>
- <h2>
-     Resources
-</h2>
+<h1>Search Resources</h1>
+{{=form}}
  <table style="width:100%">
     <tr>
         <strong>
             <th>Resource Id</th>
             <th>Resource Type</th>
+            <th>Resource Category</th>
             <th>Resource Qty</th>
             <th>Resource Owner</th>
         </strong>
     </tr>
-         {{for specification in row:}}
+         {{for specification in result:}}
     <tr>
         <td>{{=specification.resources_id}}</td>
         <td>{{=specification.resources_type}}</td>
