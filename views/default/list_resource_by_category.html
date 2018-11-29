@@ -6,14 +6,16 @@
         }
     </style>
 </head>
+
  <h2>
-     Resources
+    <td>{{=category_name}}</td>
 </h2>
  <table style="width:100%">
     <tr>
         <strong>
             <th>Resource Id</th>
             <th>Resource Type</th>
+            <th>Resource Category</th>
             <th>Resource Qty</th>
             <th>Resource Owner</th>
         </strong>
@@ -22,7 +24,7 @@
     <tr>
         <td>{{=specification.resources_id}}</td>
         <td>{{=specification.resources_type}}</td>
-        <td>{{=specification.resources_category}}</td>
+        <td>{{=specification.resources_category.Name}}</td>
         <td>{{=specification.resources_qty}}</td>
         <td>{{=specification.resource_owner.username}}</td>
     </tr>

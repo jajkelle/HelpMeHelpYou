@@ -18,7 +18,7 @@
     </tr>
          {{for specification in row:}}
     <tr>
-        <td>{{=A(specification.id,_href=URL('list_resources',args=specification.id))}}</td>
+        <td>{{=A(specification.id,_href=URL('category',args=specification.id))}}</td>
         <td>{{=specification.username}}</td>
     </tr>
         {{pass}}
