@@ -74,7 +74,7 @@ def search_resource():
         people = db(query).select()
     else:
         people= []
-    return dict(form=form,result=people)
+    return dict(form=form,results=people)
 
 # ---- API (example) -----
 @auth.requires_login()
