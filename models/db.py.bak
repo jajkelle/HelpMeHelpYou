@@ -91,7 +91,6 @@ auth = Auth(db, host_names=configuration.get('host.names'))
 # -------------------------------------------------------------------------
 
 auth.settings.extra_fields['auth_user']= [
-                Field('name',compute=lambda r: "%(first_name)s %(last_name)s" % r),
                 Field('user_address', type='string'),
                 Field('latitude', type='integer'),
                 Field('longitude', type='integer')]
@@ -145,7 +144,8 @@ db.define_table('resources',
                 Field('resources_id', type='integer', unique=True),
                 Field('resources_type', type='string'),
                 Field('resources_qty', type='integer'),
-                Field('resource_owner', type='reference auth_user'))
+                Field('resource_owner', type='reference auth_user')
+                auth.signature)
 
 db.define_table('pooltable',
                 Field('pooltable_id', type='integer', unique=True),

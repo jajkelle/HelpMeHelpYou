@@ -1,0 +1,4 @@
+{{extend 'layout.html'}}
+<p>
+  <img src="static/images/buoy.png" alt="buoy" height="42" width="42">
+</p>

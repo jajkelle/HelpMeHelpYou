@@ -19,3 +19,17 @@ db.define_table('message_table',
     Field('body','text',default=''),
     Field('posted_on','datetime',default=timestamp),
     Field('posted_by',db.auth_user))
+
+db.define_table('persons_group',
+   Field('name'),
+   Field('description','text',default='No group description'),
+   Field('owned_by',db.auth_user),
+   Field('is_open','boolean',default=False),
+   Field('created_on','datetime',default=timestamp))
+
+db.define_table('acc',
+   Field('persons_group',db.persons_group),
+   Field('table_name'),
+   Field('record_id','integer'),
+   Field('access_type'))
+db.message_table.body.requires=IS_NOT_EMPTY()

@@ -8,7 +8,7 @@ db.define_table('chat_line',
     Field('username'),
     Field('description','text',default=''),
     Field('created_on','datetime',default=timestamp),
-    Field('owned_by',db.auth_user))
+    Field('created_by',db.auth_user))
 
 db.chat_line.username.requires=IS_NOT_EMPTY()
 db.chat_line.access_types=['none','read','read/chat']
@@ -19,3 +19,5 @@ db.define_table('message_table',
     Field('body','text',default=''),
     Field('posted_on','datetime',default=timestamp),
     Field('posted_by',db.auth_user))
+
+db.message_table.body.requires=IS_NOT_EMPTY()

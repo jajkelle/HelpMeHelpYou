@@ -91,7 +91,6 @@ auth = Auth(db, host_names=configuration.get('host.names'))
 # -------------------------------------------------------------------------
 
 auth.settings.extra_fields['auth_user']= [
-                Field('name',compute=lambda r: "%(first_name)s %(last_name)s" % r),
                 Field('user_address', type='string'),
                 Field('latitude', type='integer'),
                 Field('longitude', type='integer')]
