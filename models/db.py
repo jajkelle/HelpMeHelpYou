@@ -59,7 +59,7 @@ if request.is_local and not configuration.get('app.production'):
 # -------------------------------------------------------------------------
 # choose a style for forms
 # -------------------------------------------------------------------------
-response.formstyle = 'table3cols'
+response.formstyle = 'bootstrap3_stacked'
 response.form_label_separator = ''
 
 # -------------------------------------------------------------------------
