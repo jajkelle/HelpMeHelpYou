@@ -19,7 +19,7 @@ response.menu += [
       (T('List Users'), False, URL('list_id')),
       ((T('Add Resources'), False, URL('add_resources') if session.auth else URL('default','index'))),
       (T('Delete Resources'), False, URL('delete_resource',args = user_id) if session.auth else URL('default','index')),
-      (T('Edit Resources'), False, URL('edit_resource',args = user_id)),
+      (T('Edit Resources'), False, URL('edit_resource',args = user_id) if session.auth else URL('default','index')),
       (T('Search'), False,URL('default', 'search_resource'))
         ]
     )
