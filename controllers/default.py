@@ -9,7 +9,6 @@
 
 # ---- example index page ----
 def index():
-    response.flash = T("Hello World")
     return dict(message=T('Welcome to HelpYouHelpMe'))
 
 
