@@ -1,0 +1,15 @@
+[2018-11-28 14:02:31] START
+[2018-11-28 14:03:31] DELETE images/models/menu.py: -97
+[2018-11-28 14:05:39] EDIT images/models/db.py: -38
+[2018-11-28 14:30:06] EDIT images/controllers/default.py: 0
+[2018-11-28 14:30:59] EDIT images/controllers/default.py: -38
+[2018-11-28 14:31:39] EDIT images/views/default/index.html: -39
+[2018-11-28 14:33:47] EDIT images/controllers/default.py: 10
+[2018-11-28 14:35:54] CREATE default/show.html: 0
+[2018-11-28 14:36:17] EDIT images/views/default/show.html: 13
+[2018-11-28 14:49:47] EDIT images/models/db.py: 3
+[2018-11-28 14:49:55] EDIT images/models/db.py: 0
+[2018-11-28 14:56:37] EDIT images/views/default/index.html: 37
+[2018-11-28 14:56:44] EDIT images/views/default/index.html: 0
+[2018-11-28 14:57:32] EDIT images/views/default/index.html: -37
+[2018-11-28 14:58:04] EDIT images/models/db.py: -3

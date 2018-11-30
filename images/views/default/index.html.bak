@@ -1,0 +1,50 @@
+{{extend 'layout.html'}}
+
+<style>
+.thumbnail {
+    width:160px;
+    height:120px;
+    color:#000;
+    border: 2px solid;
+    margin:0px;
+    padding:0px;
+}
+
+.videodiv {
+    color:#000;
+    border: 3px solid;
+    padding: 5px;
+    margin: 5px;
+    width: 400px;
+}
+
+table td tr {
+    margin:0px;
+    padding:0px;
+    border:0px;
+}
+</style>
+
+<H1>Resources Library!</H1>
+<H3>Upload your resources so others can found what they need.</H3>
+
+<table>
+
+{{for image in images:}}
+     <tr><td>
+        <div class='videodiv'>
+        <table>
+        <tr><td><img class='thumbnail' src="{{=URL(r=request,c='appadmin',f='download',args=['db',video.converted_image])}}" /></td>
+        <td>
+                <h3>{{=A(image.title,_href=URL('show?id=%s'%image.id))}}</h3><br />
+                {{=video.description}}<br /><br />
+                {{=LI(A(image.title, _href=URL("show", args=image.id)))}}
+                {{=A('Delete',_href=URL('delete?id=%s'%image.id))}}
+           </td></tr></table>
+        </div>
+    </td></tr>
+{{pass}}
+<tr>
+        <td><br /><b>{{=A('Add Your Resources',_href=URL('new_video'))}}</b></td>
+    </tr>
+</table>
