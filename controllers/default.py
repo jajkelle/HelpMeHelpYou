@@ -20,7 +20,7 @@ def list_resources():
 def delete_resource():
     user_id = request.args(0,cast=int)
     db(db.resources.resources_id == request.vars.resources_id).delete()
-    specifications = db(db.resources.resource_owner==user_id).select()
+    row = db(db.resources.resource_owner==user_id).select()
     return locals()
 
 def list_id():
@@ -36,7 +36,7 @@ def list_resource_by_category():
 def add_resources():
     user_id = session.auth.user.id
     db.resources.resource_owner.default = user_id
-    form = SQLFORM(db.resources).process(next='list_user_resources/[resource_owner]')
+    form = SQLFORM(db.resources).process(next=URL('list_resources',args = user_id))
     return locals()
 
 def edit_resource():
