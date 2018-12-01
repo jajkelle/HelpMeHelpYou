@@ -22,7 +22,7 @@
     </tr>
          {{for specification in row:}}
     <tr>
-        <td>{{=specification.resources_id}}</td>
+        <td>{{=A(specification.resources_id,_href=URL('list_single_resource',args=specification.resources_id))}}</td>
         <td>{{=specification.resources_type}}</td>
         <td>{{=specification.resources_category.Name}}</td>
         <td>{{=specification.resources_qty}}</td>

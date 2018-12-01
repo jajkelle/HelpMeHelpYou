@@ -12,14 +12,16 @@
  <table style="width:30%">
     <tr>
         <strong>
-            <th>User Id</th>
-            <th>User Name</th>
+            <th>User Username</th>
+            <th>User First Name</th>
+            <th>User Last Name</th>
         </strong>
     </tr>
          {{for specification in row:}}
     <tr>
-        <td>{{=A(specification.id,_href=URL('category',args=specification.id))}}</td>
-        <td>{{=specification.username}}</td>
+        <td>{{=A(specification.username,_href=URL('list_resources',args=specification.id))}}</td>
+        <td>{{=specification.first_name}}</td>
+        <td>{{=specification.last_name}}</td>
     </tr>
         {{pass}}
 </table>
