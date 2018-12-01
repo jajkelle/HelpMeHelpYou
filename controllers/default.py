@@ -9,8 +9,8 @@
 
 # ---- example index page ----
 def index():
-    response.flash = T("Hello World")
     return dict(message=T('Welcome to HelpYouHelpMe'))
+
 
 def list_resources():
     user_id = request.args(0,cast=int)
@@ -19,9 +19,8 @@ def list_resources():
 
 def delete_resource():
     user_id = request.args(0,cast=int)
-    for row in db(db.resources.resource_owner==user_id).select():
-        db(db.resources.resources_id == request.vars.resources_id).delete()
-    row = db(db.resources.resource_owner==user_id).select()
+    db(db.resources.resources_id == request.vars.resources_id).delete()
+    specifications = db(db.resources.resource_owner==user_id).select()
     return locals()
 
 def list_id():
@@ -40,9 +39,20 @@ def add_resources():
     form = SQLFORM(db.resources).process(next='list_user_resources/[resource_owner]')
     return locals()
 
-def edit_resources():
+def edit_resource():
     user_id = request.args(0,cast=int)
-    form = SQLFORM(db.resources,id).process('list_user_resources/[resource_owner]')
+    edit_id = request.vars.resources_id
+    edit_type = request.vars.resources_type
+    edit_qty = request.vars.resources_qty
+    try:
+        db(db.resources.resources_id == edit_id).update(resources_type = edit_type)
+    except:
+        pass
+    try:
+        db(db.resources.resources_id == edit_id).update(resources_qty = edit_qty)
+    except:
+        pass
+    specifications = db(db.resources.resource_owner==user_id).select()
     return locals()
 
 def profile():
@@ -50,6 +60,25 @@ def profile():
 
 def category():
     row = db(db.category).select()
+    return locals()
+
+def test():
+    form = SQLFORM(db.resources)
+    return locals()
+
+def search_resource():
+    form = SQLFORM.factory(Field('title', requires=IS_NOT_EMPTY()))
+    if form.accepts(request):
+        tokens = form.vars.title.split()
+        query = reduce(lambda a,b:a&b,[db.resources.resources_type.contains(k) for k in tokens])
+        people = db(query).select()
+    else:
+        people= []
+    return dict(form=form,result=people)
+
+def list_single_resource():
+    resource_id = request.args(0,cast=int)
+    row=db(db.resources.resources_id==resource_id).select()
     return locals()
 
 # ---- API (example) -----
