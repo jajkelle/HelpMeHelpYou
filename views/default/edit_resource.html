@@ -1,6 +1,6 @@
 {{extend 'layout.html'}}
  <h2>Edit resource</h2>
-<form enctype="multipart/form-data" action="{{=URL('welcome', 'default', 'edit_resource', args = user_id)}}" autocomplete="on" method="post">
+<form enctype="multipart/form-data" action="{{=URL( 'default', 'edit_resource', args = user_id)}}" autocomplete="on" method="post">
     Resource Id:   <input name="resources_id" /> <p /> <p />
     Resource Type: <input name="resources_type" /> <p />
     Resource Qty:  <input name="resources_qty" /> <p />
