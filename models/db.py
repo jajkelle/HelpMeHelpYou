@@ -146,10 +146,10 @@ db.define_table('category', Field('Name',type='string'),
 
 
 db.define_table('resources',
-                Field('resources_id', type='integer', unique=True,requires=IS_NOT_EMPTY()),
+                Field('resources_id', type='integer', unique=True),
                 Field('resources_type', type='string',requires=IS_NOT_EMPTY()),
                 Field('resources_qty', type='integer',requires=IS_NOT_EMPTY()),
-                Field('resources_category', type = 'reference category'),
+                Field('resources_category', type = 'reference category',requires = IS_IN_DB(db, 'category.id', '%(Name)s')),
                 Field('resource_owner', type='reference auth_user', writable=False))
 
 db.define_table('pooltable',
