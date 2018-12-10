@@ -149,7 +149,7 @@ db.define_table('resources',
                 Field('resources_id', type='integer', unique=True,requires=IS_NOT_EMPTY()),
                 Field('resources_type', type='string',requires=IS_NOT_EMPTY()),
                 Field('resources_qty', type='integer',requires=IS_NOT_EMPTY()),
-                Field('resources_category', type = 'reference category',requires=IS_NOT_EMPTY()),
+                Field('resources_category', type = 'reference category'),
                 Field('resource_owner', type='reference auth_user', writable=False))
 
 db.define_table('pooltable',
