@@ -1,6 +1,6 @@
-<!DOCTYPE html>
 <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{=T.accepted_language or 'en'}}"> <!--<![endif]-->
   <head>
+      <!-- given orginally with the frame work -->
     <meta charset="utf-8">
     <!-- www.phpied.com/conditional-comments-block-downloads/ -->
     <!-- Always force latest IE rendering engine
@@ -33,14 +33,19 @@
     {{block head}}{{end}}
   </head>
   <body>
+    <div class="w2p_flash alert alert-dismissable">{{=response.flash or ''}}</div>
     <!-- Navbar ======================================= -->
     <nav class="navbar navbar-light navbar-expand-md bg-faded bg-dark navbar-dark justify-content-center">
-       <a href="/HelpMeHelpYou/default/index" class="navbar-brand d-flex w-50 mr-auto">HelpMeHelpYou</a>
+        <img src="https://raw.githubusercontent.com/jajkelle/HelpMeHelpYou/jade/static/images/Logo.png" height="42" width="65" alt="HelpMeHelpYou"></img>
+        <strong>
+            <font color = "white">HelpMeHelpYou</font>
+        </strong>
        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
        </button>
+      <!-- goes through menu.py in order to make the drop down menu and other buttons show on top-->
        <div class="navbar-collapse collapse w-100" id="navbarNavDropdown">
-           <ul class="navbar-nav w-100 justify-content-center">
+         <ul class="navbar-nav w-100 justify-content-center">
           {{for _item in response.menu or []:}}
           {{if len(_item)<4 or not _item[3]:}}
           <li class="nav-item {{if _item[1]:}}active{{pass}}">
@@ -58,9 +63,7 @@
           {{pass}}
           {{pass}}
         </ul>
-         <form class="form-inline my-2 my-lg-0">
-             <input class="form-control mr-sm-2" type="text" placeholder="Search">
-         </form>
+      <!--drop down menu for the sign up and profile page-->
         {{if 'auth' in globals():}}
         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
           <li class="nav-item dropdown">
@@ -69,7 +72,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               {{if auth.user:}}
-              <a class="dropdown-item" href="{{=URL('default','profile')}}">{{=T('Profile')}}</a>
+              <a class="dropdown-item" href="{{=URL('default','user/profile')}}">{{=T('Profile')}}</a>
               {{if 'change_password' not in auth.settings.actions_disabled:}}
               <a class="dropdown-item" href="{{=URL('default','user/change_password')}}">{{=T('Change Password')}}</a>
               {{pass}}
@@ -79,9 +82,6 @@
               {{if 'register' not in auth.settings.actions_disabled:}}
               <a class="dropdown-item" href="{{=URL('default','user/register')}}">{{=T('Sign up')}}</a>
               {{pass}}
-              {{if 'retrieve_password' not in auth.settings.actions_disabled:}}
-              <a class="dropdown-item" href="{{=URL('default','user/retrieve_password')}}">{{=T('Lost Password')}}</a>
-              {{pass}}
               {{pass}}
             </div>
           </li>
@@ -90,12 +90,14 @@
       </div>
     </nav>
 
+
     <!-- Masthead ===================================== -->
     {{block header}}
     {{end}}
     <!-- Main ========================================= -->
     <!-- Begin page content -->
     <div class="container-fluid main-container">
+        <!-- refers to default/index.html-->
       {{include}}
       {{=response.toolbar() if response.show_toolbar else ''}}
     </div>
