@@ -1,23 +1,23 @@
 {{extend 'layout.html'}}
 <h1>Search Resources</h1>
 {{=form}}
- <table style="width:100%">
+ <table style="width:70%">
     <tr>
         <strong>
             <th>Resource Id</th>
             <th>Resource Type</th>
-            <th>Resource Category</th>
             <th>Resource Qty</th>
             <th>Resource Owner</th>
         </strong>
     </tr>
          {{for specification in result:}}
     <tr>
-        <td>{{=specification.resources_id}}</td>
+        <div>
+        <td>{{=A(specification.resources_id,_href=URL('list_single_resource',args=specification.resources_id))}}</td>
         <td>{{=specification.resources_type}}</td>
-        <td>{{=specification.resources_category}}</td>
         <td>{{=specification.resources_qty}}</td>
         <td>{{=specification.resource_owner.username}}</td>
+            </div>
     </tr>
         {{pass}}
 </table>
