@@ -1,21 +1,26 @@
 {{extend 'layout.html'}}
 
-{{block header}}
-<div class="jumbotron jumbotron-fluid background" style="background-color: #333; color:white; padding:30px;word-wrap:break-word;">
-  <div class="container center">
-    <h1 class="display-5">Home</h1>
-  </div>
-</div>
-{{end}}
+<!DOCTYPE html>
+<html>
 
-<div class="row">
-  <div class="col-md-12">
-    {{if 'message' in globals():}}
-    <h2>{{=message}}</h2>
-    {{elif 'content' in globals():}}
-    {{=content}}
-    {{else:}}
-    {{=BEAUTIFY(response._vars)}}
-    {{pass}}
-  </div>
-</div>
+ <body>
+     <div class="container">
+     <form class="form-signin">
+        <h2 class="form-signin-heading"><strong>Welcome to HelpMeHelpYou!</strong></h2>
+     <div class="col-md-8 order-md-1">
+
+    <h2>
+    <p><img style="border: 20px solid white" src="https://raw.githubusercontent.com/jajkelle/HelpMeHelpYou/jade/static/images/Logo.png" width="500"  alt="HelpMeHelpYou" class="center"/></p></h2>
+
+         <hr class="featurette-divider">
+
+<p style="padding-left: 30px"><em>
+HelpMeHelpYou gives what we can take and what we need. People go their whole lives feeling invisible, like they don’t matter and they believe that what they need isn’t important. We believe that when people truly have their needs met they will have the strength to work together to fight the insidious oppression each individual is experiencing today.<br />
+<br />
+And what we want to do ultimately create something that helps fulfill individual's needs. Users can join, list the things they need/can provide.<br />
+</em></p>
+<img src="https://raw.githubusercontent.com/jajkelle/HelpMeHelpYou/jade/static/images/pool_of_resources.png" style="width: 49%; height: 220px; margin-top: 10px">
+<img src="https://raw.githubusercontent.com/jajkelle/HelpMeHelpYou/jade/static/images/empty_pool.png" style="width: 49%; height: 220px; margin-top: 10px">
+
+</body>
+</html>
