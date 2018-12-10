@@ -8,53 +8,45 @@
 #https://helpmehelpyou/deafult/list_user_resources/category/
 
 # ---- example index page ----
-#Homepage of our website
 def index():
-    return dict(message=T('Welcome to HelpYouHelpMe'))
+    return dict(message=T('Welcome to HelpMeHelpYou'))
 
-#takes in user_id as argument
-#list the resource of the user with that user id
+
 def list_resources():
+    #grabs the user_id from the database and calls the whole row
     user_id = request.args(0,cast=int)
     row=db(db.resources.resource_owner==user_id).select()
     return locals()
 
-#takes in user_id as argument
-#Goes through that users resource database and delete the requested resource
 def delete_resource():
+    #grabs the user_id from the database and calls the delete function on that resource_id item
     user_id = request.args(0,cast=int)
     db(db.resources.resources_id == request.vars.resources_id).delete()
+    #show the row
     row = db(db.resources.resource_owner==user_id).select()
     return locals()
 
-#list all the user id in our database
 def list_id():
+    #call the row with the users and show the users
     row = db(db.auth_user).select()
     return locals()
 
-#takes in category as argument
-#returns a list of resources that belongs in that category
 def list_resource_by_category():
+    #get the category name and get the categories from the database table
     category_name = request.args(0)
     category=db.category(Name=category_name)
     row = db(db.resources.resources_category==category).select()
     return locals()
 
-#takes in user_id of the user in session
-#Return a SQL form for the user to add resources to
-#Enter the new resources into data base and redirects user to their own resource page
-#If not in session, redirect to homepage
 def add_resources():
+    #get the user_id, make the resource owner the user_id, and add the resource to the database
     user_id = session.auth.user.id
     db.resources.resource_owner.default = user_id
-    form = SQLFORM(db.resources).process(next=URL('list_resources',args = user_id))
-    return locals()
+    form = SQLFORM(db.resources).process(next=URL('list_resources', args = user_id))
+    return dict(form=form)
 
-#takes in user_id of the user in session
-#Return a form for user to enter the resource they want to edit
-#Enter the information of the resource is now changed in our database
-#If not in session, redirect to homepage
 def edit_resource():
+    #take the fields entered by users and update it in the database
     user_id = request.args(0,cast=int)
     edit_id = request.vars.resources_id
     edit_type = request.vars.resources_type
@@ -70,27 +62,78 @@ def edit_resource():
     specifications = db(db.resources.resource_owner==user_id).select()
     return locals()
 
-#Adds a profile page
 def profile():
+    #given function, came with framework
     return dict(form=auth.profile())
 
-#User input in a SQLForm to find the resources they are looking for
-#Returns a list of all the resources that relates to what the user is looking for
 def search_resource():
+    #creates a form with a the field that the user types in
     form = SQLFORM.factory(Field('title', requires=IS_NOT_EMPTY()))
     if form.accepts(request):
+        #split the title by word
         tokens = form.vars.title.split()
+        #checks throught the database for the resource type that contains that string
+        #reference web2py manual
         query = reduce(lambda a,b:a&b,[db.resources.resources_type.contains(k) for k in tokens])
+
+        #the query goes into the value people which gets returned
         people = db(query).select()
     else:
         people= []
     return dict(form=form,result=people)
 
-#takes a resource id as input
-#return the information of that resource
 def list_single_resource():
+    #find the row that corresponds to the resource_id and show it
     resource_id = request.args(0,cast=int)
     row=db(db.resources.resources_id==resource_id).select()
+    return locals()
+
+def index_2():
+    images = db2().select(db2.image.ALL, orderby=db2.image.title)
+    return locals()
+
+def makeThumbnail(db2table,ImageID,size=(150,150)):
+    #reference "http://www.web2pyslices.com/slice/show/1387/upload-image-and-make-a-thumbnail"
+    try:
+        thisImage=db2(db2table.id==ImageID).select()[0]
+        import os, uuid
+        from PIL import Image
+    except: return
+    im=Image.open(request.folder + 'image/' + thisImage.mainfile)
+    im.thumbnail(size,Image.ANTIALIAS)
+    thumbName='image.thumb.%s.jpg' % (uuid.uuid4())
+    im.save(request.folder + 'image/' + thumbName,'jpeg')
+    thisImage.update_record(thumb=thumbName)
+    return locals()
+
+def uploadimage():
+    #reference "http://www.web2pyslices.com/slice/show/1387/upload-image-and-make-a-thumbnail"
+    db2table = db2.image
+    if len(request.args):
+        records = db2(db2table.id==request.args[0]).select()
+    if len(request.args) and len(records):
+        form = SQLFORM(db2table, records[0], deletable=True)
+    else:
+        form = SQLFORM(db2table)
+    if form.accepts(request.vars, session):
+        response.flash = 'form accepted'
+        makeThumbnail(db2table,form.vars.id,(175,175))
+    elif form.errors:
+        response.flash = 'form has errors'
+
+    list = crud.select(db2table)
+    return dict(form=form)
+
+def show():
+    #reference "http://www.web2py.com/books/default/chapter/29/03/overview" the web2py manual
+    #get the image from the database and show it
+    image = db2.image(request.args(0, cast=int)) or redirect(URL('index_2'))
+    db2.post.image_id.default = image.id
+    #create a form and take the fields associated with the comment and the picture and add it to the image table
+    form = SQLFORM(db2.post)
+    if form.process().accepted:
+        response.flash = 'your comment is posted'
+    comments = db2(db2.post.image_id == image.id).select()
     return locals()
 
 # ---- API (example) -----
@@ -139,4 +182,4 @@ def download():
     allows downloading of uploaded files
     http://..../[app]/default/download/[filename]
     """
-    return response.download(request, db)
+    return response.download(request, db2)
