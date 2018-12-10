@@ -4,6 +4,7 @@
 # -------------------------------------------------------------------------
 from gluon.contrib.appconfig import AppConfig
 from gluon.tools import Auth
+from gluon.tools import Crud
 
 # -------------------------------------------------------------------------
 # This scaffolding model makes your app work on Google App Engine too
@@ -59,7 +60,7 @@ if request.is_local and not configuration.get('app.production'):
 # -------------------------------------------------------------------------
 # choose a style for forms
 # -------------------------------------------------------------------------
-response.formstyle = 'table3cols'
+response.formstyle = 'bootstrap3_stacked'
 response.form_label_separator = ''
 
 # -------------------------------------------------------------------------
@@ -145,16 +146,39 @@ db.define_table('category', Field('Name',type='string'),
 
 
 db.define_table('resources',
-                Field('resources_id', type='integer', unique=True),
-                Field('resources_type', type='string'),
-                Field('resources_qty', type='integer'),
-                Field('resources_category',type = 'reference category'),
-                Field('resource_owner', type='reference auth_user',writable=False))
+                Field('resources_id', type='integer', unique=True,requires=IS_NOT_EMPTY()),
+                Field('resources_type', type='string',requires=IS_NOT_EMPTY()),
+                Field('resources_qty', type='integer',requires=IS_NOT_EMPTY()),
+                Field('resources_category', type = 'reference category',requires = IS_IN_DB(db, 'category.id', '%(Name)s')),
+                Field('resource_owner', type='reference auth_user', writable=False))
 
 db.define_table('pooltable',
                 Field('pooltable_id', type='integer', unique=True),
                 Field('user_id', type='reference auth_user'),
                 Field('resources_id', type='reference resources'))
+
+db2 = DAL("sqlite://storage.sqlite")
+
+crud = Crud(db2)
+
+db2.define_table('image',
+                Field('title', unique=True),
+                Field('file', 'upload'),
+                format = '%(title)s')
+
+db2.define_table('post',
+                Field('image_id', 'reference image'),
+                Field('author'),
+                Field('email'),
+                Field('body', 'text'))
+
+db2.image.title.requires = IS_NOT_IN_DB(db2, db2.image.title)
+db2.post.image_id.requires = IS_IN_DB(db2, db2.image.id, '%(title)s')
+db2.post.author.requires = IS_NOT_EMPTY()
+db2.post.email.requires = IS_EMAIL()
+db2.post.body.requires = IS_NOT_EMPTY()
+
+db2.post.image_id.writable = db2.post.image_id.readable = False
 
 #
 # Fields can be 'string','text','password','integer','double','boolean'
